@@ -9,17 +9,22 @@
 	<!-- HTTP security configurations -->
 	<http auto-config="true" use-expressions="true"
 		entry-point-ref="authenticationProcessingFilterEntryPoint">
-		<form-login login-processing-url="/static/j_spring_security_check"
-			login-page="/login" authentication-failure-url="/login?login_error=t" />
-		<logout logout-url="/static/j_spring_security_logout" />
-
 		<!-- Configure these elements to secure URIs in your application -->
-		<intercept-url pattern="/choices/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/member/**" access="isAuthenticated()" />
-		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/static/**" access="permitAll" />
-		<intercept-url pattern="/**" access="permitAll" />
+		<intercept-url pattern="/ext-3.2.1/**" access="permitAll" />
+		<intercept-url pattern="/css/**" access="permitAll" />
+		<intercept-url pattern="/scripts/**" access="permitAll" />
+		<intercept-url pattern="/index.jsp" filters="none"
+			access="permitAll" />
+		<intercept-url pattern="/app/**" access="isAuthenticated()" />
+
+		<custom-filter ref="authenticationProcessingFilter"
+			position="FORM_LOGIN_FILTER" />
 	</http>
+
+	<beans:bean id="authenticationProcessingFilter"
+		class="com.backwater.igym.security.CustomAuthenticationProcessingFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
 
 	<beans:bean id="authenticationProcessingFilterEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
