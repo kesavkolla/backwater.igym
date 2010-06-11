@@ -17,8 +17,11 @@
 			access="permitAll" />
 		<intercept-url pattern="/app/**" access="isAuthenticated()" />
 
-		<!-- custom-filter ref="authenticationProcessingFilter"
-			position="FORM_LOGIN_FILTER" /-->
+		<!-- custom security filter -->
+		<!--
+			custom-filter ref="authenticationProcessingFilter"
+			position="FORM_LOGIN_FILTER" /
+		-->
 	</http>
 
 	<beans:bean id="authenticationProcessingFilter"
