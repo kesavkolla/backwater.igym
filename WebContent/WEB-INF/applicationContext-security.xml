@@ -13,8 +13,7 @@
 		<intercept-url pattern="/ext-3.2.1/**" access="permitAll" />
 		<intercept-url pattern="/css/**" access="permitAll" />
 		<intercept-url pattern="/scripts/**" access="permitAll" />
-		<intercept-url pattern="/index.jsp" filters="none"
-			access="permitAll" />
+		<intercept-url pattern="/index.html" filters="none" />
 		<intercept-url pattern="/app/**" access="isAuthenticated()" />
 
 		<!-- custom security filter -->
@@ -34,19 +33,21 @@
 	</beans:bean>
 
 	<!-- Configure Authentication mechanism -->
+	<!--
+		Usernames/Passwords are rod/koala dianne/emu scott/wombat peter/opal
+		These passwords are from spring security app example
+	-->
 	<authentication-manager alias="authenticationManager">
-		<!--
-			SHA-256 values can be produced using 'echo -n your_desired_password |
-			sha256sum' (using normal *nix environments)
-		-->
 		<authentication-provider>
-			<password-encoder hash="sha-256" />
+			<password-encoder hash="md5" />
 			<user-service>
-				<user name="admin"
-					password="8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
-					authorities="ROLE_ADMIN" />
-				<user name="user"
-					password="04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb"
+				<user name="rod" password="a564de63c2d0da68cf47586ee05984d7"
+					authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+				<user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e"
+					authorities="ROLE_USER,ROLE_TELLER" />
+				<user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a"
+					authorities="ROLE_USER" />
+				<user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8"
 					authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
