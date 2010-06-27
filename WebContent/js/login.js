@@ -55,7 +55,6 @@ Ext.onReady(function() {
 							 */
 							success : function() {
 								Ext.Msg.alert('Status', 'Login Successful!', function(btn, text) {
-
 									if (btn == 'ok') {
 										window.location = 'main.action';
 									}

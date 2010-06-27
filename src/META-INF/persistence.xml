@@ -5,7 +5,7 @@
 	<persistence-unit name="iGymPersistanceUnit"
 		transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>iGymDataSource</jta-data-source>
+		<jta-data-source>java:iGymDataSource</jta-data-source>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<!--

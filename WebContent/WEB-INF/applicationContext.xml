@@ -37,7 +37,7 @@
 		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
 	<!-- Datasource integration with JBoss datasource -->
-	<jee:jndi-lookup jndi-name="iGymDataSource" id="dataSource"></jee:jndi-lookup>
+	<jee:jndi-lookup jndi-name="java:iGymDataSource" id="dataSource"></jee:jndi-lookup>
 
 	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
