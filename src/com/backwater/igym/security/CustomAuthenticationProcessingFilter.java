@@ -16,18 +16,18 @@ public class CustomAuthenticationProcessingFilter extends UsernamePasswordAuthen
 	@Override
 	protected void successfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
 			final Authentication authResult) throws IOException, ServletException {
-		super.successfulAuthentication(request, response, authResult);
 		final Writer out = response.getWriter();
 		out.write("{success:true, targetUrl : ''}");
 		out.flush();
+		super.successfulAuthentication(request, response, authResult);
 	}
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		super.unsuccessfulAuthentication(request, response, failed);
 		final Writer out = response.getWriter();
 		out.write("{ success: false, errors: { reason: 'Login failed. Try again.' }}");
 		out.flush();
+		super.unsuccessfulAuthentication(request, response, failed);
 	}
 }

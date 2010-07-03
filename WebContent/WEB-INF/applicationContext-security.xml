@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<global-method-security />
 	<!-- HTTP security configurations -->
-	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint">
+	<http use-expressions="true" entry-point-ref="authenticationProcessingFilterEntryPoint" auto-config="false">
 
 		<!-- Configure these elements to secure URIs in your application -->
 		<intercept-url pattern="/ext-3.2.1/**" access="permitAll" />
@@ -17,38 +17,39 @@
 		<intercept-url pattern="/app/**" access="isAuthenticated()" />
 
 		<!-- custom security filter -->
-		<custom-filter ref="authenticationProcessingFilter"
-			position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="authenticationProcessingFilter" position="FORM_LOGIN_FILTER" />
 	</http>
 
-	<beans:bean id="authenticationProcessingFilter"
-		class="com.backwater.igym.security.CustomAuthenticationProcessingFilter">
+	<beans:bean id="authenticationProcessingFilter" class="com.backwater.igym.security.CustomAuthenticationProcessingFilter">
 		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
+		<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
 	</beans:bean>
 
-	<beans:bean id="authenticationProcessingFilterEntryPoint"
-		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-		<beans:property name="loginFormUrl" value="/index.jsp" />
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/index.html" />
+	</beans:bean>
+
+	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler" />
+
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/index.html" />
 		<beans:property name="forceHttps" value="false" />
 	</beans:bean>
 
 	<!-- Configure Authentication mechanism -->
 	<!--
-		Usernames/Passwords are rod/koala dianne/emu scott/wombat peter/opal
-		These passwords are from spring security app example
+		Usernames/Passwords are rod/koala dianne/emu scott/wombat peter/opal These passwords are from spring security app
+		example
 	-->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider>
 			<password-encoder hash="md5" />
 			<user-service>
-				<user name="rod" password="a564de63c2d0da68cf47586ee05984d7"
-					authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
-				<user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e"
-					authorities="ROLE_USER,ROLE_TELLER" />
-				<user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a"
-					authorities="ROLE_USER" />
-				<user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8"
-					authorities="ROLE_USER" />
+				<user name="rod" password="a564de63c2d0da68cf47586ee05984d7" authorities="ROLE_SUPERVISOR, ROLE_USER, ROLE_TELLER" />
+				<user name="dianne" password="65d15fe9156f9c4bbffd98085992a44e" authorities="ROLE_USER,ROLE_TELLER" />
+				<user name="scott" password="2b58af6dddbd072ed27ffc86725d7d3a" authorities="ROLE_USER" />
+				<user name="peter" password="22b5c9accc6e1ba628cedc63a72d57f8" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
